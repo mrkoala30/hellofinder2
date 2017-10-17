@@ -13,7 +13,7 @@ export class NewpctService {
     const headers = new Headers({'Content-Type': 'application/json'});
     let handleError: any;
 
-    return this._http.post('http://localhost:3000/api/page', JSON.stringify(item), {headers: headers}).map(res => res.json());
+    return this._http.post('https://hellofinder2.herokuapp.com/api/page', JSON.stringify(item), {headers: headers}).map(res => res.json());
   }
 
   load4k(){
@@ -21,7 +21,7 @@ export class NewpctService {
     const headers = new Headers({'Content-Type': 'application/json'});
     let handleError: any;
 
-    return this._http.post('http://localhost:3000/api/page', JSON.stringify(item), {headers: headers}).map(res => res.json());
+    return this._http.post('https://hellofinder2.herokuapp.com/api/page', JSON.stringify(item), {headers: headers}).map(res => res.json());
   }
 
   loadBlueRip(){
@@ -29,7 +29,7 @@ export class NewpctService {
     const headers = new Headers({'Content-Type': 'application/json'});
     let handleError: any;
 
-    return this._http.post('http://localhost:3000/api/page', JSON.stringify(item), {headers: headers}).map(res => res.json());
+    return this._http.post('https://hellofinder2.herokuapp.com/api/page', JSON.stringify(item), {headers: headers}).map(res => res.json());
   }
 
   getItem(url: string){
@@ -37,7 +37,7 @@ export class NewpctService {
     const headers = new Headers({'Content-Type': 'application/json'});
     let handleError: any;
 
-    return this._http.post('http://localhost:3000/api/item', JSON.stringify(item), {headers: headers}).map(res => res.json());
+    return this._http.post('https://hellofinder2.herokuapp.com/api/item', JSON.stringify(item), {headers: headers}).map(res => res.json());
 
   }
 
