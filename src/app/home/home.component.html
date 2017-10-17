@@ -1,0 +1,77 @@
+<app-dialog [item]= "select_item"[(visible)]="showDialog">
+  <h1>Descarga</h1>
+</app-dialog>
+
+
+
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab_1">
+      <div class="row">
+        <div *ngFor="let item of show; let i = index" class="col-md-2" style="cursor: pointer; cursor: hand;">
+          <div (click)="showDialog = !showDialog; toDialog(show[i])" class="box box-info">
+            <div class="box-body">
+              <img class="img-responsive" style="margin: 0 auto;" src="{{item.img}}"/>
+
+              <!-- <h5 class="text-center">Titulo: {{item.titulo}}</h5> -->
+
+              <h6 class="text-center">{{item.calidad}}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.tab-pane -->
+    <div class="tab-pane" id="tab_2">
+      <div class="row">
+        <div *ngFor="let item of forka; let i = index" class="col-md-2" style="cursor: pointer; cursor: hand;">
+          <div (click)="showDialog = !showDialog; toDialog(forka[i])" class="box box-info">
+            <div class="box-body">
+              <img class="img-responsive" style="margin: 0 auto;" src="{{item.img}}"/>
+
+              <!-- <h5 class="text-center">Titulo: {{item.titulo}}</h5> -->
+
+              <h6 class="text-center">{{item.calidad}}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.tab-pane -->
+    <div class="tab-pane" id="tab_3">
+      <div class="row">
+        <div *ngFor="let item of bluerip; let i = index" class="col-md-2" style="cursor: pointer; cursor: hand;">
+          <div (click)="showDialog = !showDialog; toDialog(bluerip[i])" class="box box-info">
+            <div class="box-body">
+              <img class="img-responsive" style="margin: 0 auto;" src="{{item.img}}"/>
+
+              <!-- <h5 class="text-center">Titulo: {{item.titulo}}</h5> -->
+
+              <h6 class="text-center">{{item.calidad}}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.tab-pane -->
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

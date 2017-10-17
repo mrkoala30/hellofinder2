@@ -1,0 +1,162 @@
+//creamos la base de datos tienda y el objeto SHOP donde iremos almacenando la info
+var sqlite3 = require('sqlite3').verbose(),
+    db = new sqlite3.Database('calypo'),
+    DataB = {};
+
+//elimina y crea la tabla clientes
+DataB.createTable = function()
+{
+
+    //db.run("DROP TABLE IF EXISTS config");
+    //db.run("CREATE TABLE IF NOT EXISTS config (id INTEGER PRIMARY KEY AUTOINCREMENT, user TEXT, pass TEXT, host TEXT, port TEXT, activate TEXT)");
+
+    //db.run("DROP TABLE IF EXISTS imports");
+    //db.run("CREATE TABLE IF NOT EXISTS imports (id INTEGER PRIMARY KEY AUTOINCREMENT, file TEXT, url TEXT, folder TEXT, date TEXT)");
+
+    db.run("DROP TABLE IF EXISTS exports");
+    db.run("CREATE TABLE IF NOT EXISTS exports (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, file TEXT, url TEXT, folder TEXT, date TEXT)");
+    console.log("La tabla imports ha sido correctamente creada");
+}
+
+//elimina y crea la tabla orders
+DataB.ordersTable = function()
+{
+    db.run("DROP TABLE IF EXISTS orders");
+    db.run("CREATE TABLE IF NOT EXISTS orders (id INTEGER PRIMARY KEY AUTOINCREMENT, customerId INTEGER, price INT)");
+    console.log("La tabla orders ha sido correctamente creada");
+}
+
+//inserta un nuevo usuario en la tabla clientes
+DataB.insertImport = function(tableData)
+{
+    var stmt = db.prepare("INSERT INTO imports VALUES (?,?,?,?,?)");
+    stmt.run(null,tableData.file,tableData.url,tableData.folder,tableData.date);
+    console.log("Insert correcto");
+    stmt.finalize();
+}
+
+//inserta un nuevo pedido en la tabla orders
+DataB.insertExport = function(tableData)
+{
+    var stmt = db.prepare("INSERT INTO exports VALUES (?,?,?,?,?,?)");
+    stmt.run(null,tableData.name,tableData.file,tableData.url,tableData.folder,tableData.date);
+    console.log("Insert correcto");
+    stmt.finalize();
+}
+
+//obtiene todos los clientes y sus pedidos, utilizamos left join por
+//si el cliente no tiene pedidos nos devulelva el registro con valores null
+DataB.user_orders = function(callback)
+{
+    db.all("SELECT c.id,c.nombre,c.edad,o.customerId,o.price FROM clientes AS c LEFT JOIN orders AS o ON c.id = o.customerId", function(err, rows)
+    {
+        if(err)
+        {
+            throw err;
+        }
+        else
+        {
+            callback(null, rows);
+        }
+    });
+}
+
+//obtenemos todos los clientes de la tabla clientes
+//con db.all obtenemos un array de objetos, es decir todos
+DataB.getImports = function(callback)
+{
+    db.all("SELECT * FROM imports", function(err, rows) {
+        if(err)
+        {
+            throw err;
+        }
+        else
+        {
+            callback(null, rows);
+        }
+    });
+}
+
+DataB.getImportsandEx = function(callback)
+{
+    var result = new Array();
+    db.all("SELECT * FROM imports", function(err, rows) {
+        if(err)
+        {
+            throw err;
+        }
+        else
+        {
+            result = rows;
+            db.all("SELECT * FROM exports", function(err, rows2) {
+                if(err)
+                {
+                    throw err;
+                }
+                else
+                {
+                    callback(null, result.concat(rows2));
+                }
+            });
+        }
+    });
+
+
+
+
+}
+
+DataB.getExports = function(callback)
+{
+    db.all("SELECT * FROM exports", function(err, rows) {
+        if(err)
+        {
+            throw err;
+        }
+        else
+        {
+            callback(null, rows);
+        }
+    });
+}
+
+
+
+DataB.removeExports = function(tableData)
+{
+    var stmt = db.prepare("DELETE FROM exports WHERE id=(?)");
+    stmt.run(tableData.id);
+    console.log("Delete correcto");
+    stmt.finalize();
+}
+
+
+//obtenemos un usuario por su id, en este caso hacemos uso de db.get
+//ya que sólo queremos una fila
+DataB.getUser = function(userId,callback)
+{
+    stmt = db.prepare("SELECT * FROM clientes WHERE id = ?");
+    //pasamos el id del cliente a la consulta
+    stmt.bind(userId);
+    stmt.get(function(error, row)
+    {
+        if(error)
+        {
+            throw err;
+        }
+        else
+        {
+            //retornamos la fila con los datos del usuario
+            if(row)
+            {
+                callback("", row);
+            }
+            else
+            {
+                console.log("El usuario no existe");
+            }
+        }
+    });
+}
+//exportamos el modelo para poder utilizarlo con require
+module.exports = DataB;

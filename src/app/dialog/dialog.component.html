@@ -1,0 +1,17 @@
+<div [@dialog] *ngIf="visible" class="dialog">
+  <ng-content></ng-content>
+  <p *ngIf="!item_loaded">
+    Loading...
+  </p>
+  <div class="box box-success">
+      <iframe *ngIf="item_loaded"  [src]="youtube"
+              width="854" height="480" frameborder="0" allowfullscreen></iframe>
+    </div>
+  <a *ngIf="item_loaded" href="{{item_loaded.name}}" class="btn btn-block btn-info">
+    Descargar Torrent
+  </a>
+
+  <button *ngIf="closable && item_loaded" (click)="close()" aria-label="Close" class="btn btn-block btn-danger pull-left">Close</button>
+  <button *ngIf="closable" (click)="close()" aria-label="Close" class="dialog__close-btn">X</button>
+</div>
+<div *ngIf="visible" class="overlay" (click)="close()"></div>
