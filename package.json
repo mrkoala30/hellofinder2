@@ -3,13 +3,18 @@
   "version": "0.0.0",
   "license": "MIT",
   "main": "app.js",
+  "engines": {
+    "node": "8.6.0",
+    "npm": "5.4.2"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng build && node app.js",
     "build": "ng serve",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "postinstall": "ng build --aot -prod"
   },
   "private": true,
   "dependencies": {
