@@ -4,8 +4,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 
 ## Start server && api
-
-npm run build
+npm start = ng build && node app.js
+npm run build = ng server
 
 ## Development server
 
